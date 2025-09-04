@@ -22,22 +22,22 @@ petal_width = numpy.array(attributes)[:,3:4]
 
 # create a graph using 2 attribute vectors (for non-same attributes) for all possible pairs
 # red is Iris-setosa, green is Iris-virginica, blue is Iris-versicolor
-color_vector = [
-    match species:
-        case 'Iris-setosa':
-            'r'
-        case 'Iris-virginica':
-            'g'
-        case 'Iris-versicolor':
-            'b'
-    for species in labels
-]
-attribute_set = {sepal_length, sepal_width, petal_length, petal_width}
-for attribute_x in attribute_set:
-    for attribute_y in attribute_set:
-        if (attribute_y != attribute_x):
-            plt.scatter(attribute_x, attribute_y)
-print(sepal_length)
+color_map = {
+    'Iris-setosa': 'red',
+    'Iris-virginica': 'green',
+    'Iris-versicolor': 'blue'
+}
+color_vector = [color_map[species] for species in labels]
+attribute_arr = [sepal_length, sepal_width, petal_length, petal_width]
+attribute_category_strings = ["sepal length", "sepal width", "petal length", "petal width"]
 
-plt.scatter(xs, ys, c=colors)
-plt.savefig("plot.png")
+fig, axes = plt.subplots(4,4, constrained_layout=True)
+for x_index in range(4):
+    for y_index in range(4):
+        if (x_index != y_index):
+            axes[x_index,y_index].scatter(attribute_arr[x_index], attribute_arr[y_index], c=color_vector)
+            axes[x_index,y_index].set_title(f"{attribute_category_strings[y_index]} vs. {attribute_category_strings[x_index]}", fontsize=10)
+            
+plt.savefig(f"plots.png")
+
+
