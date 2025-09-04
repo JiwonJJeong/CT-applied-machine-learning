@@ -4,8 +4,8 @@ import numpy
 
 # load
 file_path = "./data/iris.data"
-attributes = pd.read_csv(file_path, usecols=[0,1,2,3])
-labels = pd.read_csv(file_path, usecols=[4])
+attributes = pd.read_csv(file_path, usecols=[0,1,2,3], header=None, names=['sepal length in cm', 'sepal width in cm','petal length in cm', 'petal width in cm'])
+labels = pd.read_csv(file_path, usecols=[4], header =None, names=['species'])
 
 print("attributes:")
 print(attributes)
