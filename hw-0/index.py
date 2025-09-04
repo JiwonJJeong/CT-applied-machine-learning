@@ -31,13 +31,15 @@ color_vector = [color_map[species] for species in labels]
 attribute_arr = [sepal_length, sepal_width, petal_length, petal_width]
 attribute_category_strings = ["sepal length", "sepal width", "petal length", "petal width"]
 
-fig, axes = plt.subplots(4,4, constrained_layout=True)
+# loop over all possible combinations of attributes and create subplots
+fig, axes = plt.subplots(4,4, constrained_layout=True, figsize=(20,20))
 for x_index in range(4):
     for y_index in range(4):
         if (x_index != y_index):
             axes[x_index,y_index].scatter(attribute_arr[x_index], attribute_arr[y_index], c=color_vector)
-            axes[x_index,y_index].set_title(f"{attribute_category_strings[y_index]} vs. {attribute_category_strings[x_index]}", fontsize=10)
-            
+            axes[x_index,y_index].set_title(f"{attribute_category_strings[y_index]} vs. {attribute_category_strings[x_index]}", fontsize=20)
+
+plt.suptitle("Iris Data\nSubplot Titles: 'y' vs 'x'", fontsize=30)
 plt.savefig(f"plots.png")
 
 
