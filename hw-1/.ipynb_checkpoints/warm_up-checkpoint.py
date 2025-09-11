@@ -45,8 +45,8 @@ def q2():
 def q3_a():
     input = torch.tensor([5.,6.,8.,9.], requires_grad=True)
     g = torch.dot(torch.exp(input) * input * input, torch.tensor([1.,3.,5.,6.]))
-    torch.autograd.backward(g)
-    gradient = torch.grad()
+    g.backward()
+    gradient = input.grad
     print(gradient)
 
 # (b) Let A be a matrix with values [[4, 3], [7, 9]] and B be a matrix with values [[3, 5], [1, 11]]. Calcu-
@@ -58,8 +58,8 @@ def q3_a():
 # Hints: 1. to calculate matrix multiplication, you need to use the function torch.matmul; 2.
 # to calculate L2 norm, you need to use the function torch.norm() and set p = 2.
 def q3_b():
-    a = torch.tensor([[4,3],[7,9]])
-    b = torch.tensor([[3,5],[1,11]])
+    a = torch.tensor([[4.,3.],[7.,9.]], requires_grad=True)
+    b = torch.tensor([[3.,5.],[1.,11.]])
     # matrix multiplication ABC = (AB)C
     AB = torch.matmul(a,b)
     AAt = torch.matmul(a, torch.transpose(a,0,1))
@@ -67,13 +67,20 @@ def q3_b():
     At = torch.transpose(a,0,1)
     inner_matrix_product = torch.matmul(At,torch.matmul(ABt, torch.matmul(AAt, AB)))
     f = torch.log(torch.norm((inner_matrix_product), p=2))
+    f.backward()
+    print(a.grad)
 
 # (c) Calculate the gradient of
 # F ¡x, y¢ = tanh (x) + tanh ¡y¢
 # at the point ¡x = 3, y = 7¢.
 
 # tanhx = (expx - exp(-x))/(expx + exp(-x))
-
+def q3_c():
+    input = torch.tensor([3., 7.], requires_grad = True)
+    f = torch.dot((torch.exp(input)-torch.exp(-1* input))/(torch.exp(input)+torch.exp(-1*input)), torch.tensor([1.,1.]))
+    f.backward()
+    gradient = input.grad
+    print(gradient)
 
 # 4. Let a be a torch integer tensor containing the values [1, 2, 3].
 # 2
@@ -83,16 +90,16 @@ def q3_b():
 def q4():
     a = torch.tensor([1,2,3])
     b = a.numpy()
-    a = torch.from_numpy(a).float()
+    a = a.float()
 
 # 5. Answer the following questions using the package Numpy:
 # • What is the product of matrices of matrices [[1, 3, 5], [2, 1, 5]] and [[8, 4], [3, 6], [2, 7]]?
 def q5_a():
-    a = np.array([1,3,5],[2,1,5])
-    b = np.array([8,4],[3,6],[2,7])
+    a = np.array([[1,3,5],[2,1,5]])
+    b = np.array([[8,4],[3,6],[2,7]])
     print(np.matmul(a,b))
 
 # • What is the Frobenius norm of the 1 x 3 matrix [100, 2, 1]?
 def q5_b():
     a = np.array([100,2,1])
-    print(np.norm(a))
+    print(np.linalg.norm(a))
