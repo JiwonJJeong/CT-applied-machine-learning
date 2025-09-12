@@ -4,5 +4,44 @@ from matplotlib import pyplot as plt
 
 file_path = "./data/train.csv"
 
-def dist_1st_floor_sqft():
-    attributes = pd.read_csv(file_path, usecols=[0,1,2,3], header=None, names=['sepal length in cm', 'sepal width in cm','petal length in cm', 'petal width in cm'])
+def plot_distribution_of_continuous(col):
+    att = pd.read_csv(file_path, usecols=[col])
+    plt.hist(att, color='blue', edgecolor='black')
+    plt.xlabel('Values')
+    plt.ylabel('Frequency')
+    plt.title(pd.DataFrame(att).columns[0])
+
+def plot_distribution_of_categorical(col):
+    att = pd.read_csv(file_path, usecols=[col])
+    series = att[col]
+    counts = series.value_counts(sort=False)
+    plt.bar(counts.index, counts.values, color="blue", edgecolor="black")
+    plt.xlabel("Values")
+    plt.ylabel("Frequency")
+    plt.xticks(rotation=45)
+    plt.show()
+
+def table_of_frequencies_and_medians():
+    data = pd.read_csv(file_path)
+    summary_df = None
+    
+    for col_index in range(1,79):   # loop over first 79 columns
+        attr_name = data.columns[col_index]        # get column name
+        col_series = data.iloc[:, col_index]       # get the Series
+
+        distribution = col_series.value_counts()
+        median_target = data.groupby(attr_name)["SalePrice"].median()
+
+        result = pd.DataFrame({
+            "Attribute": attr_name,
+            "Category": distribution.index,
+            "Count": distribution.values,
+            "Median_Price": median_target.reindex(distribution.index).values
+        })
+
+        if summary_df is None:
+            summary_df = result
+        else:
+            summary_df = pd.concat([summary_df, result], ignore_index=True)
+    summary_df.to_csv("summary.csv", index=False)
+    return summary_df
