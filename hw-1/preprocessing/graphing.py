@@ -2,7 +2,7 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 
-file_path = "./data/train.csv"
+file_path = "../data/train.csv"
 
 def plot_distribution_of_continuous(col):
     att = pd.read_csv(file_path, usecols=[col])
