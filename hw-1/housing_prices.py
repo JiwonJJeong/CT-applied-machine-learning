@@ -18,6 +18,7 @@ def plot_distribution_of_categorical(col):
     plt.bar(counts.index, counts.values, color="blue", edgecolor="black")
     plt.xlabel("Values")
     plt.ylabel("Frequency")
+    plt.title(pd.DataFrame(att).columns[0])
     plt.xticks(rotation=45)
     plt.show()
 
