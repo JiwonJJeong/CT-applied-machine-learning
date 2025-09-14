@@ -66,7 +66,8 @@ def q3_b():
     ABt = torch.matmul(a, torch.transpose(b,0,1))
     At = torch.transpose(a,0,1)
     inner_matrix_product = torch.matmul(At,torch.matmul(ABt, torch.matmul(AAt, AB)))
-    f = torch.log(torch.norm((inner_matrix_product), p=2))
+    norm = torch.norm((inner_matrix_product), p=2)
+    f = torch.log(norm*norm)
     f.backward()
     print(a.grad)
 
