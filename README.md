@@ -6,6 +6,7 @@ My work for Cornell Tech's CS 5785: Applied Machine Learning homeworks. So far s
 
 # Featured Notebooks
 ## NLP Binary Classification of Disaster Twitter Tweets
+[Open the notebook](hw-2/NLP-disaster-tweets.ipynb)
 * Used logistic regression and natural-language-processing to classify tweets as disaster or non-disaster.
 * Experimented with hyperparameter optimization and regularization methods to improve model generalizability by 15%.
 
