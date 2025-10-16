@@ -1,3 +1,5 @@
 # ignore virtual environment (with libraries)
 venv/
 .env
+
+.ipynb_checkpoints/
